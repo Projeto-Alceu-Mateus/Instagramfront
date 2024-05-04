@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import authService from '../service/authService';
 import Logo from './Instagram.png';
 import './login.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
