@@ -1,0 +1,26 @@
+/* Home.css */
+.sidebar {
+    background-color: #f8f9fa; /* Cor de fundo */
+    border-right: 1px solid #dee2e6; /* Borda divisória */
+    display: flex; /* Habilita flexbox */
+    flex-direction: column; /* Organiza os filhos em coluna */
+    justify-content: space-between; /* Espaça os elementos entre o topo e o fundo */
+}
+
+.nav-flex-grow {
+    flex-grow: 1; /* Faz com que esse elemento ocupe todo o espaço disponível */
+}
+
+.sidebar .nav-link {
+    color: #495057; /* Cor do texto */
+    transition: background-color 0.3s, color 0.3s; /* Transições suaves */
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link:focus {
+    background-color: #e9ecef; /* Fundo ao passar o mouse */
+    color: #007bff; /* Cor do texto ao passar o mouse */
+}
+
+.feed {
+    padding: 20px; /* Espaçamento interno */
+}
