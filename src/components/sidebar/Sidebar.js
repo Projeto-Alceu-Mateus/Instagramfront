@@ -11,6 +11,7 @@ function Sidebar({ setShowSearchPopup, setShowNewPostPopup }) {
         localStorage.removeItem('userToken'); // Supondo que você use localStorage para tokens
         window.location = '/login'; // Redireciona para a tela de login
     };
+    
     return (
         <div className="col-md-3 col-lg-2 d-flex flex-column min-vh-100 bg-light sidebar">
             <div className='logo'>

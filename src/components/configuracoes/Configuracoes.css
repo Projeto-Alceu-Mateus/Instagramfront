@@ -19,3 +19,13 @@ button {
 button:hover {
     opacity: 0.9;
 }
+
+.light-mode .elemento {
+    background-color: #fff;
+    color: #000;
+}
+
+.dark-mode .elemento {
+    background-color: #333;
+    color: #fff;
+}

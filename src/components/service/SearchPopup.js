@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 function SearchPopup({ closePopup }) {
     const [searchResults, setSearchResults] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleSearch = (event) => {
-        // Simular resultados de busca
-        if (event.target.value.length > 2) {
-            setSearchResults([
-                { id: 1, name: "Usuário A" },
-                { id: 2, name: "Usuário B" },
-                { id: 3, name: "Usuário C" }
-            ]);
+        const searchTerm = event.target.value;
+        if (searchTerm.length > 0) {
+            setLoading(true);
+            axios.get(`http://localhost:8080/user/search?username=${searchTerm}`)
+                .then(response => {
+                    setSearchResults(response.data);
+                    setLoading(false);
+                })
+                .catch(error => {
+                    console.log('Error fetching search results', error);
+                    setLoading(false);
+                });
         } else {
             setSearchResults([]);
         }
@@ -18,13 +27,23 @@ function SearchPopup({ closePopup }) {
 
     return (
         <div className="popup search-popup">
-            <button className="close-btn" onClick={closePopup}>×</button>
+            <div className="button-container">
+                <button className="close-btn" onClick={closePopup}>
+                    <FontAwesomeIcon icon={faTimes} />
+                </button>
+            </div>
             <input type="text" placeholder="Pesquisar..." className="search-input" autoFocus onChange={handleSearch} />
+            {loading && <div>Loading...</div>}
             {searchResults.length > 0 && (
                 <ul className="search-results">
                     {searchResults.map(result => (
                         <li key={result.id} className="search-result-item">
-                            {result.name}
+                            <img
+                                src={result.profilePicture}
+                                alt="User Profile"
+                                className='profile-pic'
+                            />
+                            {result.username}
                         </li>
                     ))}
                 </ul>

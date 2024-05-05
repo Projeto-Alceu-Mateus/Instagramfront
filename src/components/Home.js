@@ -19,7 +19,7 @@ function Home() {
         {
             id: 2,
             username: "usuario2",
-            profilePic: "https://via.placeholder.com/150/FF0000/FFFFFF?Text=DP", // Exemplo de imagem de perfil
+            profilePic: "https://via.placeholder.com/150", // Exemplo de imagem de perfil
             mainImage: "https://via.placeholder.com/500/FF0000/FFFFFF?Text=MainImage", // Exemplo de imagem principal
             likes: 75,
             caption: "Outra legenda interessante"

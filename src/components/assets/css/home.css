@@ -1,21 +1,25 @@
-
-
 /* Barra Lateral */
 .sidebar {
-    width: 250px; /* ou use classes de Bootstrap como col-md-3 ou col-lg-2 */
-    position: fixed; /* Mantém fixo no layout */
+    width: 250px;
+    /* ou use classes de Bootstrap como col-md-3 ou col-lg-2 */
+    position: fixed;
+    /* Mantém fixo no layout */
     top: 0;
     left: 0;
     height: 100vh;
-    background-color: #fff; /* Cor de fundo */
-    border-right: 1px solid #dbdbdb; /* Linha divisória */
+    background-color: #fff;
+    /* Cor de fundo */
+    border-right: 1px solid #dbdbdb;
+    /* Linha divisória */
 }
 
 .feed {
-    margin-left: 250px; /* Ajuste conforme a largura da barra lateral */
+    margin-left: 250px;
+    /* Ajuste conforme a largura da barra lateral */
     flex-grow: 1;
     padding: 20px;
-    background-color: #f9f9f9; /* Cor de fundo */
+    background-color: #f9f9f9;
+    /* Cor de fundo */
 }
 
 
@@ -33,10 +37,13 @@
     display: flex;
     align-items: start;
 }
-.nav-link:hover, .nav-link:focus {
+
+.nav-link:hover,
+.nav-link:focus {
     background-color: #e1e1e1;
     border-radius: 5px;
 }
+
 .logo img {
     width: 200px;
     margin: 20px 0;
@@ -66,35 +73,45 @@ h1 {
 .popup {
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 58%;
     transform: translate(-50%, -50%);
-    width: 50%;
+    width: 80%;
     /* Ajuste a largura conforme necessário */
-    max-width: 900px;
+    max-width: 1200px;
+    min-height: 500px;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.555);
     z-index: 1050;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .close-btn {
-    align-self: flex-end;
-    background: none;
-    border: none;
-    font-size: 24px;
+    text-align: right;
+    width: auto;
+    height: auto;
+    font-size: 32px;
     cursor: pointer;
-    color: #333;
+    background-color: #fff;
 }
+
+.close-btn:hover {
+    color: #f00;
+    /* Cor quando hover, ajuste conforme necessário */
+}
+
+button.close-btn {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 
 .search-input {
     width: 100%;
     padding: 12px 20px;
     margin-bottom: 20px;
-    /* Espaço adicional para resultados */
     box-sizing: border-box;
     border: 2px solid #ddd;
     border-radius: 8px;
@@ -118,5 +135,19 @@ h1 {
 }
 
 .search-result-item:hover {
-    background-color: #f5f5f5;
+    background-color: #f0f0f0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: end;
+}
+
+.profile-pic {
+    width: '40px';
+    height: '40px';
+    border-radius: '50%';
+    margin-right: '10px';
+    object-fit: cover;
+
 }

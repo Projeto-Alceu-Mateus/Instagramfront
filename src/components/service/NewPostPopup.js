@@ -1,9 +1,14 @@
 import React from 'react';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 function NewPostPopup({ closePopup }) {
     return (
         <div className="popup new-post-popup">
-            <button className="close-btn" onClick={closePopup}>×</button>
+            <div className="button-container">
+                <button className="close-btn" onClick={closePopup}>
+                    <FontAwesomeIcon icon={faTimes} /> {/* Usando ícone FontAwesome */}
+                </button>
+            </div>
             <div className="popup-content">
                 <div className="upload-area">
                     <div className="icon"><i className="fa fa-file-upload"></i></div>
