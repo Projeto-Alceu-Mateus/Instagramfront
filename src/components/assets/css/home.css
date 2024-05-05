@@ -1,26 +1,122 @@
-/* Home.css */
+
+
+/* Barra Lateral */
 .sidebar {
-    background-color: #f8f9fa; /* Cor de fundo */
-    border-right: 1px solid #dee2e6; /* Borda divisória */
-    display: flex; /* Habilita flexbox */
-    flex-direction: column; /* Organiza os filhos em coluna */
-    justify-content: space-between; /* Espaça os elementos entre o topo e o fundo */
-}
-
-.nav-flex-grow {
-    flex-grow: 1; /* Faz com que esse elemento ocupe todo o espaço disponível */
-}
-
-.sidebar .nav-link {
-    color: #495057; /* Cor do texto */
-    transition: background-color 0.3s, color 0.3s; /* Transições suaves */
-}
-
-.sidebar .nav-link:hover, .sidebar .nav-link:focus {
-    background-color: #e9ecef; /* Fundo ao passar o mouse */
-    color: #007bff; /* Cor do texto ao passar o mouse */
+    width: 250px; /* ou use classes de Bootstrap como col-md-3 ou col-lg-2 */
+    position: fixed; /* Mantém fixo no layout */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #fff; /* Cor de fundo */
+    border-right: 1px solid #dbdbdb; /* Linha divisória */
 }
 
 .feed {
-    padding: 20px; /* Espaçamento interno */
+    margin-left: 250px; /* Ajuste conforme a largura da barra lateral */
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f9f9f9; /* Cor de fundo */
+}
+
+
+/* Pop-up ajuste para centralizar corretamente */
+
+.nav-link {
+    width: 100%;
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    margin: 5px 0;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: start;
+}
+.nav-link:hover, .nav-link:focus {
+    background-color: #e1e1e1;
+    border-radius: 5px;
+}
+.logo img {
+    width: 200px;
+    margin: 20px 0;
+}
+
+.nav-link .fa-icon {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.feed {
+    padding: 40px;
+    background-color: #f9f9f9;
+}
+
+h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.nav-item:last-child {
+    margin-top: auto;
+    /* Coloca automaticamente no final da barra lateral */
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    /* Ajuste a largura conforme necessário */
+    max-width: 900px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.close-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    /* Espaço adicional para resultados */
+    box-sizing: border-box;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.search-results {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    max-height: 200px;
+    /* Limitar a altura dos resultados */
+}
+
+.search-result-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.search-result-item:hover {
+    background-color: #f5f5f5;
 }

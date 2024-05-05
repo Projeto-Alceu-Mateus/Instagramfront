@@ -1,0 +1,53 @@
+.post {
+    background-color: #fff;
+    margin: 20px 0;
+    border: 1px solid #dbdbdb;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-details strong {
+    margin-left: 10px;
+}
+
+.post-image {
+    width: 600px;
+    height: 600px;
+    display: block;
+    margin: 0 auto;
+}
+
+.post-footer {
+    padding: 10px;
+}
+
+.actions {
+    font-size: 20px;
+}
+
+.actions svg {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.likes {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.post-footer p {
+    margin: 5px 0;
+}
