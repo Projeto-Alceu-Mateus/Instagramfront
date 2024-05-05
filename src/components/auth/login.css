@@ -1,0 +1,14 @@
+.container{ 
+    margin-top: 7rem;
+}
+/* Estilos existentes para o modo claro */
+.login-form {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* Estilos para o modo escuro */
+.dark-mode .login-form {
+    background-color: #222;
+    color: #ccc;
+}

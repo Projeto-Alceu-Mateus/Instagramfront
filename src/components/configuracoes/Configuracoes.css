@@ -1,0 +1,31 @@
+.configuracoes {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.light-mode .elemento {
+    background-color: #fff;
+    color: #000;
+}
+
+.dark-mode .elemento {
+    background-color: #333;
+    color: #fff;
+}
