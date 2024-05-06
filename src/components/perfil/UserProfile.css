@@ -1,0 +1,42 @@
+.profile-area {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 30px;
+}
+
+
+
+.profile-image {
+    width: 150px;
+    /* Ajuste conforme necessário */
+    height: 150px;
+    border-radius: 50%;
+}
+
+.profile-info {
+    flex-grow: 1;
+    padding-left: 20px;
+    /* Espaço entre a imagem e o texto */
+}
+
+.profile-name,
+.profile-bio {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.profile-bio {
+    font-size: 0.8rem;
+    /* Ajuste conforme necessário */
+}
+
+.btn-danger {
+    float: right;
+    /* Botão à direita */
+}
+
+.col-md-8 {
+    width: 80%;
+}

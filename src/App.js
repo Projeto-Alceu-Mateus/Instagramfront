@@ -4,20 +4,22 @@ import Home from './components/Home';
 import Signup from './components/auth/Signup';
 import AuthGuard from './components/service/authGuard';
 import Configuracoes from './components/configuracoes/Configuracoes';
+import UserProfile from './components/perfil/UserProfile';
 
 
 function App() {
   return (
 
-      <Router>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/home" element={<AuthGuard><Home /></AuthGuard>} />
-          <Route path="/" element={<Navigate replace to="/login" />} />
-          <Route path="/configuracoes" element={<AuthGuard><Configuracoes /></AuthGuard>} />
-        </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/home" element={<AuthGuard><Home /></AuthGuard>} />
+        <Route path="/" element={<Navigate replace to="/login" />} />
+        <Route path="/perfil/:username" element={<UserProfile />} />
+        <Route path="/configuracoes" element={<AuthGuard><Configuracoes /></AuthGuard>} />
+      </Routes>
+    </Router>
   );
 }
 

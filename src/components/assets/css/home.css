@@ -151,3 +151,8 @@ button.close-btn {
     object-fit: cover;
 
 }
+
+.searchLink {
+    text-decoration: none;
+    color: #333;
+}

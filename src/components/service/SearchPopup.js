@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Importa o componente Link do React Router
 
 function SearchPopup({ closePopup }) {
     const [searchResults, setSearchResults] = useState([]);
@@ -38,12 +39,15 @@ function SearchPopup({ closePopup }) {
                 <ul className="search-results">
                     {searchResults.map(result => (
                         <li key={result.id} className="search-result-item">
-                            <img
-                                src={result.profilePicture}
-                                alt="User Profile"
-                                className='profile-pic'
-                            />
-                            {result.username}
+                            {/* Utiliza o componente Link para redirecionar para o perfil */}
+                            <Link className="searchLink" to={`/perfil/${result.username}`}>
+                                <img
+                                    src={result.profilePicture}
+                                    alt="User Profile"
+                                    className='profile-pic'
+                                />
+                                {result.username}
+                            </Link>
                         </li>
                     ))}
                 </ul>

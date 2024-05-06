@@ -16,7 +16,8 @@ function Configuracoes() {
         }
     };
 
-    return (<div className="container-fluid h-100">
+    return (
+    <div className="container-fluid h-100">
         <div className="row h-100">
             <Sidebar setShowSearchPopup={setShowSearchPopup} setShowNewPostPopup={setShowNewPostPopup} />
             <div className="col-md-9 col-lg-10 feed">

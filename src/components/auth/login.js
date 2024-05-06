@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import authService from '../service/authService';
 import Logo from './Instagram.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Login.css';
+import './login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 
