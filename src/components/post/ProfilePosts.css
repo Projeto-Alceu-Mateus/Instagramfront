@@ -1,0 +1,17 @@
+.profile-posts {
+    margin-top: 20px;
+}
+
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 20px;
+}
+
+.no-posts {
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    color: #666;
+}
