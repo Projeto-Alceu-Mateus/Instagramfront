@@ -26,6 +26,10 @@ function SearchPopup({ closePopup }) {
         }
     };
 
+    const handleLinkClick = (username) => {
+        window.location.href = `/perfil/${username}`; // Isto força o navegador a carregar a página como um novo pedido
+    };
+
     return (
         <div className="popup search-popup">
             <div className="button-container">
@@ -39,15 +43,14 @@ function SearchPopup({ closePopup }) {
                 <ul className="search-results">
                     {searchResults.map(result => (
                         <li key={result.id} className="search-result-item">
-                            {/* Utiliza o componente Link para redirecionar para o perfil */}
-                            <Link className="searchLink" to={`/perfil/${result.username}`}>
+                            <a className="searchLink" href="#" onClick={() => handleLinkClick(result.username)}>
                                 <img
                                     src={result.profilePicture}
                                     alt="User Profile"
                                     className='profile-pic'
                                 />
                                 {result.username}
-                            </Link>
+                            </a>
                         </li>
                     ))}
                 </ul>

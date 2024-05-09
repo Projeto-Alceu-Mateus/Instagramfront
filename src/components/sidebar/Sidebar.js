@@ -17,7 +17,9 @@ function Sidebar({ setShowSearchPopup, setShowNewPostPopup }) {
         const decoded = jwtDecode(token);
         username = decoded.sub; // O 'subject' do token é configurado para ser o email do usuário no backend
     }
-
+    const handleLinkClick = (username) => {
+        window.location.href = `/perfil/${username}`; // Isto força o navegador a carregar a página como um novo pedido
+    };
 
     const handleLogout = () => {
         localStorage.removeItem('userToken'); // Supondo que você use localStorage para tokens
@@ -42,7 +44,7 @@ function Sidebar({ setShowSearchPopup, setShowNewPostPopup }) {
                     <button className="nav-link" onClick={() => setShowNewPostPopup(true)}><FontAwesomeIcon icon={faPlusSquare} className="fa-icon" /> Novo Post</button>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to={`/perfil/${username}`}><FontAwesomeIcon icon={faUser} className="fa-icon" /> Perfil</Link>
+                    <Link className="nav-link" onClick={() => handleLinkClick(username)}><FontAwesomeIcon icon={faUser} className="fa-icon" /> Perfil</Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/Configuracoes"><FontAwesomeIcon icon={faCog} className="fa-icon" /> Configurações</Link>
