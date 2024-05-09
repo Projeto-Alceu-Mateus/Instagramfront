@@ -7,6 +7,7 @@ import './UserProfile.css'; // Verifique se os estilos estão corretamente impor
 import SearchPopup from '../service/SearchPopup';
 import NewPostPopup from '../service/NewPostPopup';
 import { jwtDecode } from 'jwt-decode';
+import ProfilePosts from '../post/ProfilePost';
 function UserProfile() {
     const [showSearchPopup, setShowSearchPopup] = useState(false);
     const [showNewPostPopup, setShowNewPostPopup] = useState(false);
@@ -18,13 +19,12 @@ function UserProfile() {
     const decoded = jwtDecode(token); // Decodifica o token para obter o nome de usuário logado
     const loggedInUsername = decoded.sub;
 
-
+    
     useEffect(() => {
         const token = localStorage.getItem('userToken');
         if (token) {
             const decoded = jwtDecode(token); // Use jwtDecode aqui
             setIsOwner(decoded.sub === loggedInUsername);
-            console.log(decoded.sub === loggedInUsername);
         }
 
         axios.get(`http://localhost:8080/user/${username}`)
@@ -77,11 +77,9 @@ function UserProfile() {
                     <Sidebar setShowSearchPopup={setShowSearchPopup} setShowNewPostPopup={setShowNewPostPopup} />
                     <div className="col-md-8 offset-md-2">
                         <div className="profile-area d-flex align-items-center mt-3 justify-content-between">
-                            <h1>error</h1>
+                            <h1>Esta página não está disponível.</h1>
                         </div>
-                        <div className="profile-posts">
-                            <hr />
-                        </div>
+                        <h1>  O link em que você clicou pode não estar funcionando, ou a página pode ter sido removida.</h1>
                     </div>
                 </div>
             </div>
@@ -91,7 +89,7 @@ function UserProfile() {
 
     );
 
-    return (
+    if (loggedInUsername !== targetUsername) return (
         <Fragment>
             <div className="container-fluid h-100">
                 <div className="row h-100">
@@ -114,7 +112,36 @@ function UserProfile() {
                         <div className="profile-posts">
                             <hr />
                             <h3>Posts</h3>
+                            <ProfilePosts loggedInUsername={user.loggedInUsername} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {showSearchPopup && <SearchPopup closePopup={() => setShowSearchPopup(false)} />}
+            {showNewPostPopup && <NewPostPopup closePopup={() => setShowNewPostPopup(false)} />}
+        </Fragment>
+    );
+    return (
+        <Fragment>
+            <div className="container-fluid h-100">
+                <div className="row h-100">
+                    <Sidebar setShowSearchPopup={setShowSearchPopup} setShowNewPostPopup={setShowNewPostPopup} />
+                    <div className="col-md-8 offset-md-2">
+                        <div className="profile-area d-flex align-items-center mt-3">
+                            <img src={user.profileImage || 'https://via.placeholder.com/150'} alt={`${user.username} profile`} className="profile-image img-fluid rounded-circle" />
+                            <div className='name-bio'>
+                                <h1 className="profile-name">{user.fullName}</h1>
+                                <h1>{user.username}</h1>
+                                <p className="profile-bio">{user.bio || "No bio provided."}</p>
+                                <p>Seguidores: {user.followersCount} Seguindo: {user.followingCount}</p>
+
+                                {isOwner && <button className="btn btn-danger">Editar Perfil</button>}
+                            </div>
+                        </div>
+                        <div className="profile-posts">
+                            <hr />
                             {/* Renderização das postagens do usuário */}
+                            <ProfilePosts username={loggedInUsername} />
                         </div>
                     </div>
                 </div>
