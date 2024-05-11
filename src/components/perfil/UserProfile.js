@@ -1,75 +1,77 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 
 import Sidebar from '../sidebar/Sidebar';
-import './UserProfile.css'; // Verifique se os estilos estão corretamente importados
+import './UserProfile.css';
 import SearchPopup from '../service/SearchPopup';
 import NewPostPopup from '../service/NewPostPopup';
 import { jwtDecode } from 'jwt-decode';
 import ProfilePosts from '../post/ProfilePost';
+
 function UserProfile() {
+    const [loading, setLoading] = useState(true);
     const [showSearchPopup, setShowSearchPopup] = useState(false);
     const [showNewPostPopup, setShowNewPostPopup] = useState(false);
-    const { username: targetUsername } = useParams();
-    const { username } = useParams();
     const [user, setUser] = useState(null);
+    const [posts, setPosts] = useState([]);
     const [isOwner, setIsOwner] = useState(false);
-    const token = localStorage.getItem('userToken');
-    const decoded = jwtDecode(token); // Decodifica o token para obter o nome de usuário logado
-    const loggedInUsername = decoded.sub;
-
-    
-    useEffect(() => {
-        const token = localStorage.getItem('userToken');
-        if (token) {
-            const decoded = jwtDecode(token); // Use jwtDecode aqui
-            setIsOwner(decoded.sub === loggedInUsername);
-        }
-
-        axios.get(`http://localhost:8080/user/${username}`)
-            .then(response => {
-                setUser(response.data);
-            })
-            .catch(error => {
-                console.error('Failed to fetch user data:', error);
-            });
-    }, [loggedInUsername]);
     const [isFollowing, setIsFollowing] = useState(false);
 
+    const { username: targetUsername } = useParams();
+    const token = localStorage.getItem('userToken');
+    const decoded = jwtDecode(token);
+    const loggedInUsername = decoded.sub;
+
     useEffect(() => {
-        // Assumindo que 'sub' contém o nome de usuário
+        setLoading(true);
+        const fetchUserData = axios.get(`http://localhost:8080/user/${targetUsername}`);
+        const fetchPostsData = axios.get(`http://localhost:8080/user/${targetUsername}/posts`);
 
-        setIsOwner(loggedInUsername === targetUsername);
+        Promise.all([fetchUserData, fetchPostsData])
+            .then(([userDataResponse, postsDataResponse]) => {
+                setUser(userDataResponse.data);
+                setPosts(postsDataResponse.data);
+                setIsOwner(decoded.sub === targetUsername);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Failed to fetch data:', error);
+                setLoading(false);
+            });
+    }, [targetUsername, decoded.sub]);
 
-        axios.get(`http://localhost:8080/user/${targetUsername}/isFollowing/${decoded.sub}`, {
-        })
+    useEffect(() => {
+        axios.get(`http://localhost:8080/user/${targetUsername}/isFollowing/${decoded.sub}`)
             .then(response => {
                 setIsFollowing(response.data);
             })
             .catch(error => console.error('Failed to fetch follow status:', error));
-    }, [targetUsername]);
-
+    }, [targetUsername, decoded.sub]);
 
     const handleFollowToggle = () => {
-        const token = localStorage.getItem('userToken');
-        const decoded = jwtDecode(token); // Decodifica o token para obter o nome de usuário logado
-        const loggedInUsername = decoded.sub;
         const endpoint = isFollowing ? `/user/${loggedInUsername}/unfollow/${targetUsername}` : `/user/${loggedInUsername}/follow/${targetUsername}`;
         axios.post(`http://localhost:8080${endpoint}`)
             .then(() => {
-                setIsFollowing(!isFollowing); // Atualiza o estado
-                // Atualiza o número de seguidores
-                setUser(prevUser => {
-                    if (isFollowing) {
-                        return { ...prevUser, followersCount: prevUser.followersCount - 1 };
-                    } else {
-                        return { ...prevUser, followersCount: prevUser.followersCount + 1 };
-                    }
-                });
+                setIsFollowing(!isFollowing);
+                setUser(prevUser => ({
+                    ...prevUser,
+                    followersCount: isFollowing ? prevUser.followersCount - 1 : prevUser.followersCount + 1
+                }));
             })
             .catch(error => console.error('Error updating follow status:', error));
     };
+
+    if (loading) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                <Spinner animation="border" role="status">
+
+                </Spinner>
+            </div>
+        );
+    }
     if (!user) return (
         <Fragment>
             <div className="container-fluid h-100">
@@ -110,9 +112,8 @@ function UserProfile() {
                             </div>
                         </div>
                         <div className="profile-posts">
-                            <hr />
-                            <h3>Posts</h3>
-                            <ProfilePosts loggedInUsername={user.loggedInUsername} />
+                            <hr className='bar'/>
+                            <ProfilePosts username={targetUsername} />
                         </div>
                     </div>
                 </div>
@@ -139,7 +140,7 @@ function UserProfile() {
                             </div>
                         </div>
                         <div className="profile-posts">
-                            <hr />
+                        <hr className='bar'/>
                             {/* Renderização das postagens do usuário */}
                             <ProfilePosts username={loggedInUsername} />
                         </div>

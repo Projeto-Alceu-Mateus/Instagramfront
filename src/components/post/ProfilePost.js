@@ -18,7 +18,6 @@ function ProfilePosts({ username }) {
     if (!posts.length) {
         return (
             <div className="no-posts">
-                <h3>Não há postagens para mostrar.</h3>
             </div>
         );
     }
