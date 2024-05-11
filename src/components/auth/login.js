@@ -50,7 +50,6 @@ function Login() {
                             </div>
                         </div>
                         <div className="mb-3">
-                            <label className="form-label">Senha</label>
                             <div className="input-group">
                                 <span className="input-group-text">
                                     <FontAwesomeIcon icon={faLock} />
