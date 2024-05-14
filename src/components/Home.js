@@ -25,7 +25,6 @@ function Home() {
                 console.error('Failed to fetch user data:', error);
             });
     }, [loggedInUsername]);
-    console.log(posts);
     return (
         <div className="container-fluid h-100">
             <div className="row h-100">
