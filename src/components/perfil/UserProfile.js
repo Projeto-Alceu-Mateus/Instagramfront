@@ -112,7 +112,7 @@ function UserProfile() {
                             </div>
                         </div>
                         <div className="profile-posts">
-                            <hr className='bar'/>
+                            <hr className='bar' />
                             <ProfilePosts username={targetUsername} />
                         </div>
                     </div>
@@ -140,7 +140,7 @@ function UserProfile() {
                             </div>
                         </div>
                         <div className="profile-posts">
-                        <hr className='bar'/>
+                            <hr className='bar' />
                             {/* Renderização das postagens do usuário */}
                             <ProfilePosts username={loggedInUsername} />
                         </div>
