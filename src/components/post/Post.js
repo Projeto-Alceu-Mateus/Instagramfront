@@ -98,7 +98,7 @@ function Post({ post }) {
                         <FontAwesomeIcon className={`like-button ${liked ? 'liked' : ''}`} onClick={toggleLike} icon={liked ? fasHeart : farHeart} size="lg" />
                         <hr className="barraLike" />
                     </div>
-                    <p>{likeCount} curtidas</p>
+                    <strong>{likeCount} curtidas</strong>
                     <p>{post.caption}</p>
                 </div>
                 <div className="comments-section">
