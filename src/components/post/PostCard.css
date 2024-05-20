@@ -27,3 +27,6 @@
     font-size: 12px;
     color: #666;
 }
+.post-card img{
+    cursor: pointer;
+}

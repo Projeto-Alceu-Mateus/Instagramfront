@@ -5,7 +5,7 @@ import Signup from './components/auth/Signup';
 import AuthGuard from './components/service/authGuard';
 import Configuracoes from './components/configuracoes/Configuracoes';
 import UserProfile from './components/perfil/UserProfile';
-
+import PostDetails from './components/post/PostDetails';
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
         <Route path="/" element={<Navigate replace to="/login" />} />
         <Route path="/perfil/:username" element={<UserProfile />} />
         <Route path="/configuracoes" element={<AuthGuard><Configuracoes /></AuthGuard>} />
+        <Route path="/p/:postId" element={<PostDetails />} />
       </Routes>
     </Router>
   );
