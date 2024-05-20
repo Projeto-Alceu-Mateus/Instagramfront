@@ -5,12 +5,14 @@ import { faTimes, faImage } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import '../assets/css/NewPostPopup.css';
 import { jwtDecode } from 'jwt-decode';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function NewPostPopup({ closePopup, username }) {
     const [file, setFile] = useState(null);
     const [imagePreviewUrl, setImagePreviewUrl] = useState('');
     const [caption, setCaption] = useState('');
-    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [alert, setAlert] = useState({ show: false, message: '', variant: '' });
     const token = localStorage.getItem('userToken');
     const decoded = jwtDecode(token);
     const loggedInUsername = decoded.sub;
@@ -27,13 +29,11 @@ function NewPostPopup({ closePopup, username }) {
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
-        accept: 'image/jpeg, image/png'
+        accept: 'image/jpeg, image/png' // Aceitar apenas JPEG e PNG
     });
 
     useEffect(() => {
-        // Desabilita a rolagem quando o componente é montado
         document.body.style.overflow = 'hidden';
-        // Reabilita a rolagem quando o componente é desmontado
         return () => {
             document.body.style.overflow = 'auto';
         };
@@ -46,9 +46,11 @@ function NewPostPopup({ closePopup, username }) {
 
     const handleUploadAndCreatePost = async () => {
         if (!file) {
-            setMessage('Por favor, selecione um arquivo para fazer upload.');
+            setAlert({ show: true, message: 'Por favor, selecione um arquivo para fazer upload.', variant: 'danger' });
             return;
         }
+
+        setLoading(true);
 
         const formData = new FormData();
         formData.append('image', file);
@@ -69,12 +71,20 @@ function NewPostPopup({ closePopup, username }) {
                     'Content-Type': 'application/json'
                 }
             });
-            setMessage('Post criado com sucesso!');
+
+            if (postResponse.status === 200) {
+                setAlert({ show: true, message: 'Post criado com sucesso!', variant: 'success' });
+            } else {
+                setAlert({ show: true, message: 'Erro ao criar o post.', variant: 'danger' });
+            }
+
             setImagePreviewUrl('');
             setCaption('');
             handleClosePopup();
         } catch (error) {
-            setMessage('Erro ao criar o post: ' + (error.response?.data || error.message));
+            setAlert({ show: true, message: 'Erro ao criar o post: ' + (error.response?.data || error.message), variant: 'danger' });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -87,6 +97,11 @@ function NewPostPopup({ closePopup, username }) {
                         <FontAwesomeIcon icon={faTimes} />
                     </button>
                 </div>
+                {alert.show && (
+                    <div className={`alert alert-${alert.variant}`} role="alert">
+                        {alert.message}
+                    </div>
+                )}
                 {!imagePreviewUrl && (
                     <div {...getRootProps({ className: 'dropzone' })}>
                         <input {...getInputProps()} />
@@ -108,10 +123,11 @@ function NewPostPopup({ closePopup, username }) {
                             value={caption}
                             onChange={e => setCaption(e.target.value)}
                         />
-                        <button onClick={handleUploadAndCreatePost} className="submit-btn">Compartilhar</button>
+                        <button onClick={handleUploadAndCreatePost} className="submit-btn" disabled={loading}>
+                            {loading ? 'Carregando...' : 'Compartilhar'}
+                        </button>
                     </>
                 )}
-                {message && <p>{message}</p>}
             </div>
         </div>
     );
