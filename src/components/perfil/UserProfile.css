@@ -5,41 +5,84 @@
     gap: 30px;
 }
 
-
-
 .profile-image {
     width: 150px;
-    /* Ajuste conforme necessário */
     height: 150px;
     border-radius: 50%;
+    position: relative;
 }
 
-.profile-info {
+.profile-image-upload {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+.upload-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px; /* Aumenta o tamanho do ícone */
+}
+
+.form-control.is-valid {
+    border-color: green;
+}
+
+.form-control.is-invalid {
+    border-color: red;
+}
+
+.name-bio {
     flex-grow: 1;
     padding-left: 20px;
-    /* Espaço entre a imagem e o texto */
 }
 
 .profile-name,
 .profile-bio {
     margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
 }
 
 .profile-bio {
     font-size: 0.8rem;
-    /* Ajuste conforme necessário */
 }
 
 .btn-danger {
     float: right;
-    /* Botão à direita */
 }
 
 .col-md-8 {
     width: 80%;
 }
-.bar{
+
+.bar {
     width: 100%;
+}
+
+.tamanhaBtn {
+    width: 200px;
+}
+
+.profile-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-edit .name-bio {
+    width: 100%;
+}
+
+.profile-edit .form-control {
+    margin-bottom: 10px;
+}
+
+.profile-edit .btn {
+    margin: 5px;
 }
