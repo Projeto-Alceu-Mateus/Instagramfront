@@ -2,9 +2,8 @@ import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'; // Ícone da seta
+import { faHeart as fasHeart, faTrash, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart, faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import './Post.css'; // Certifique-se de que o caminho para o CSS está correto
 
 function Post({ post }) {
@@ -17,6 +16,7 @@ function Post({ post }) {
     const [comments, setComments] = useState([]);
     const [commentContent, setCommentContent] = useState('');
     const [showAllComments, setShowAllComments] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
 
     // Carrega o estado inicial do like do usuário para o post
     useEffect(() => {
@@ -83,14 +83,43 @@ function Post({ post }) {
         }
     };
 
+    const handleDeletePost = async () => {
+        try {
+            await axios.delete(`http://localhost:8080/p/${post.postId}`, {
+                headers: { "username": loggedInUsername }
+            });
+            window.location.href = `/perfil/${loggedInUsername}`;
+        } catch (error) {
+            console.error('Erro ao deletar post', error);
+        }
+    };
+
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
+
     const displayedComments = showAllComments ? comments : comments.slice(0, 3);
 
     return (
         <Fragment>
             <div className="post">
                 <div className="post-header">
-                    <img src={post.userSummary.profilePictureUrl} alt={post.userSummary.username} className="profile-pic" onClick={() => handleLinkClick(post.userSummary.username)} />
-                    <h4 onClick={() => handleLinkClick(post.userSummary.username)}>{post.userSummary.username} </h4>
+                    <div className="post-user-info" onClick={() => handleLinkClick(post.userSummary.username)}>
+                        <img src={post.userSummary.profilePictureUrl} alt={post.userSummary.username} className="profile-pic" />
+                        <h4>{post.userSummary.username}</h4>
+                    </div>
+                    {loggedInUsername === post.userSummary.username && (
+                        <div className="post-menu">
+                            <FontAwesomeIcon icon={faEllipsisH} onClick={toggleMenu} />
+                            {showMenu && (
+                                <div className="post-menu-options">
+                                    <button onClick={handleDeletePost}>
+                                        <FontAwesomeIcon icon={faTrash} /> Excluir
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
                 <img src={post.imageUrl} alt="Post content" className="post-image" />
                 <div className="post-caption">
@@ -104,7 +133,7 @@ function Post({ post }) {
                 <div className="comments-section">
                     {displayedComments.map(comment => (
                         <div key={comment.id} className="comment">
-                            <strong className='usernameComment' onClick={() => handleLinkClick(comment.username)}>{comment.username}</strong> {comment.content}
+                            <strong className='usernameComment' onClick={() => handleLinkClick(comment.username)}>{comment.username}:</strong> {comment.content}
                         </div>
                     ))}
                     {comments.length > 3 && !showAllComments && (
