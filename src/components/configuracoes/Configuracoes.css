@@ -20,19 +20,9 @@ button:hover {
     opacity: 0.9;
 }
 
-.light-mode .elemento {
-    background-color: #fff;
-    color: #000;
-}
-
-.dark-mode .elemento {
-    background-color: #333;
-    color: #fff;
-}
 .container-fluid {
     padding: 20px;
 }
-
 
 .mode-toggle-btn,
 .delete-account-btn,
@@ -88,4 +78,23 @@ button:hover {
     background-color: #28a745;
     color: white;
     cursor: pointer;
+}
+
+.email-status {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.email-status.valid {
+    color: green;
+}
+
+.email-status.invalid {
+    color: red;
+}
+
+.alert-success {
+    margin-top: 20px;
+    color: green;
 }
