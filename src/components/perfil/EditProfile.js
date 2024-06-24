@@ -113,6 +113,7 @@ function EditProfile({ user, onSave, onCancel }) {
             </div>
             <div className="name-bio">
                 <input
+                    
                     type="text"
                     value={usernameInput}
                     onChange={(e) => setUsernameInput(e.target.value)}
