@@ -29,3 +29,63 @@ button:hover {
     background-color: #333;
     color: #fff;
 }
+.container-fluid {
+    padding: 20px;
+}
+
+
+.mode-toggle-btn,
+.delete-account-btn,
+.change-password-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.mode-toggle-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.delete-account-btn {
+    background-color: red;
+    color: white;
+}
+
+.change-password-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.change-password-form {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.change-password-form .form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.save-password-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+}
