@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import authService from '../service/authService';
 import Logo from './Instagram.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock } from '@fortawesome/free-solid-svg-icons'
-
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -65,6 +64,9 @@ function Login() {
                             </div>
                         </div>
                         <button type="submit" className="btn btn-primary w-100">Log In</button>
+                        <p className="text-center mt-2">
+                            Esqueceu a senha? <Link to="/forgot-password">Clique aqui</Link>
+                        </p>
                         <p className="text-center mt-2">
                             Não possui conta? <a href="/signup">Cadastre-se</a>
                         </p>
