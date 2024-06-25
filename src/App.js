@@ -6,6 +6,7 @@ import AuthGuard from './components/service/authGuard';
 import Configuracoes from './components/configuracoes/Configuracoes';
 import UserProfile from './components/perfil/UserProfile';
 import PostDetails from './components/post/PostDetails';
+import ForgotPassword from './components/auth/ForgotPassword';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/perfil/:username" element={<UserProfile />} />
         <Route path="/configuracoes" element={<AuthGuard><Configuracoes /></AuthGuard>} />
         <Route path="/p/:postId" element={<PostDetails />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </Router>
   );
