@@ -1,0 +1,26 @@
+.container {
+    margin-top: 7rem;
+}
+
+.valid-feedback {
+    color: #28a745;
+    font-size: 0.875em;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875em;
+}
+
+.password-requirements {
+    font-size: 0.875em;
+    margin-top: 0.5rem;
+}
+
+.password-requirements .valid {
+    color: #28a745;
+}
+
+.password-requirements .invalid {
+    color: #dc3545;
+}
