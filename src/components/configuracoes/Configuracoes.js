@@ -7,6 +7,9 @@ import NewPostPopup from '../service/NewPostPopup';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { validatePassword, validateConfirmPassword, checkEmailAvailability } from '../functions/validationFunctions';
 
 function Configuracoes() {
     const [showSearchPopup, setShowSearchPopup] = useState(false);
@@ -18,23 +21,46 @@ function Configuracoes() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [emailInput, setEmailInput] = useState('');
     const [emailAvailable, setEmailAvailable] = useState(null);
+    const [emailError, setEmailError] = useState('');
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    const [passwordValidation, setPasswordValidation] = useState({
+        length: null,
+        number: null,
+        specialChar: null,
+        noWhitespace: null
+    });
+    const [confirmPasswordValidation, setConfirmPasswordValidation] = useState(null);
     const navigate = useNavigate();
     const token = localStorage.getItem('userToken');
     const decoded = jwtDecode(token);
     const loggedInUsername = decoded.sub;
 
     useEffect(() => {
+        const checkEmail = async () => {
+            const result = await checkEmailAvailability(emailInput);
+            setEmailAvailable(result.isValid);
+            setEmailError(result.message);
+        };
+
         if (emailInput) {
-            axios.get(`http://localhost:8080/user/check-email`, { params: { email: emailInput } })
-                .then(response => {
-                    setEmailAvailable(!response.data);
-                })
-                .catch(error => console.error('Failed to check email availability:', error));
+            checkEmail();
         } else {
             setEmailAvailable(null);
+            setEmailError('');
         }
     }, [emailInput]);
+
+    useEffect(() => {
+        if (newPassword) {
+            setPasswordValidation(validatePassword(newPassword));
+        }
+    }, [newPassword]);
+
+    useEffect(() => {
+        if (confirmPassword) {
+            setConfirmPasswordValidation(validateConfirmPassword(newPassword, confirmPassword));
+        }
+    }, [newPassword, confirmPassword]);
 
     const deleteAccount = async () => {
         if (window.confirm('Tem certeza que deseja deletar sua conta? Esta ação é irreversível!')) {
@@ -50,6 +76,10 @@ function Configuracoes() {
     };
 
     const changePassword = async () => {
+        if (!Object.values(passwordValidation).every(Boolean)) {
+            alert('Por favor, preencha os requisitos da senha.');
+            return;
+        }
         if (newPassword !== confirmPassword) {
             alert('A nova senha e a confirmação de senha não coincidem.');
             return;
@@ -69,6 +99,10 @@ function Configuracoes() {
     };
 
     const changeEmail = async () => {
+        if (!emailAvailable) {
+            alert(emailError);
+            return;
+        }
         try {
             await axios.put('http://localhost:8080/user/change-email', {
                 username: loggedInUsername,
@@ -114,13 +148,29 @@ function Configuracoes() {
                                 className="form-control"
                                 placeholder="Nova Senha"
                             />
+                            <div className="password-requirements">
+                                <div className={passwordValidation.length === null ? '' : passwordValidation.length ? 'valid' : 'invalid'}>
+                                    <FontAwesomeIcon icon={passwordValidation.length ? faCheck : faTimes} /> Pelo menos 4 caracteres
+                                </div>
+                                <div className={passwordValidation.number === null ? '' : passwordValidation.number ? 'valid' : 'invalid'}>
+                                    <FontAwesomeIcon icon={passwordValidation.number ? faCheck : faTimes} /> Pelo menos 1 número
+                                </div>
+                                <div className={passwordValidation.specialChar === null ? '' : passwordValidation.specialChar ? 'valid' : 'invalid'}>
+                                    <FontAwesomeIcon icon={passwordValidation.specialChar ? faCheck : faTimes} /> Pelo menos 1 caractere especial
+                                </div>
+                                <div className={passwordValidation.noWhitespace === null ? '' : passwordValidation.noWhitespace ? 'valid' : 'invalid'}>
+                                    <FontAwesomeIcon icon={passwordValidation.noWhitespace ? faCheck : faTimes} /> Sem espaços em branco
+                                </div>
+                            </div>
                             <input
                                 type="password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                className="form-control"
+                                className={`form-control ${confirmPasswordValidation === null ? '' : confirmPasswordValidation ? 'is-valid' : 'is-invalid'}`}
                                 placeholder="Confirmar Nova Senha"
                             />
+                            {confirmPasswordValidation === false && <div className="invalid-feedback">As senhas não coincidem.</div>}
+                            {confirmPasswordValidation === true && <div className="valid-feedback">As senhas coincidem.</div>}
                             <button className="save-password-btn" onClick={changePassword}>Salvar Senha</button>
                         </div>
                     )}
@@ -144,7 +194,7 @@ function Configuracoes() {
                                     placeholder="Novo Email"
                                 />
                                 <span className={`email-status ${emailAvailable === null ? '' : emailAvailable ? 'valid' : 'invalid'}`}>
-                                    {emailAvailable === null ? '' : emailAvailable ? 'Email disponível' : 'Email já está em uso'}
+                                    {emailAvailable === null ? '' : emailAvailable ? 'Email disponível' : emailError}
                                 </span>
                             </div>
                             <button className="save-password-btn" onClick={changeEmail} disabled={emailAvailable === false}>Salvar Email</button>

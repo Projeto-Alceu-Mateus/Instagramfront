@@ -2,24 +2,27 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { checkUsernameAvailability } from '../functions/validationFunctions';
 
 function EditProfile({ user, onSave, onCancel }) {
     const [usernameInput, setUsernameInput] = useState(user.username);
     const [bioInput, setBioInput] = useState(user.bio || '');
     const [usernameAvailable, setUsernameAvailable] = useState(null);
+    const [usernameError, setUsernameError] = useState('');
     const [newProfileImage, setNewProfileImage] = useState(null);
     const [imageUploadUrl, setImageUploadUrl] = useState(user.profilePicture);
 
     useEffect(() => {
-        if (usernameInput && usernameInput !== user.username) {
-            axios.get(`http://localhost:8080/user/${usernameInput}/verify`)
-                .then(response => {
-                    setUsernameAvailable(!response.data); // 'true' from server means username exists, so it's not available
-                })
-                .catch(error => console.error('Failed to check username availability:', error));
-        } else {
-            setUsernameAvailable(null); // Se for o mesmo username, deve ficar branco (não validação)
-        }
+        const checkUsername = async () => {
+            if (usernameInput && usernameInput !== user.username) {
+                const result = await checkUsernameAvailability(usernameInput);
+                setUsernameAvailable(result.isValid);
+                setUsernameError(result.message);
+            } else {
+                setUsernameAvailable(null); // Se for o mesmo username, deve ficar branco (não validação)
+            }
+        };
+        checkUsername();
     }, [usernameInput, user.username]);
 
     const handleImageChange = (e) => {
@@ -113,13 +116,13 @@ function EditProfile({ user, onSave, onCancel }) {
             </div>
             <div className="name-bio">
                 <input
-                    
                     type="text"
                     value={usernameInput}
                     onChange={(e) => setUsernameInput(e.target.value)}
                     className={`form-control ${usernameAvailable === null ? '' : usernameAvailable ? 'is-valid' : 'is-invalid'}`}
                     placeholder="Username"
                 />
+                {usernameAvailable === false && <div className="invalid-feedback">{usernameError}</div>}
                 <textarea
                     value={bioInput}
                     onChange={(e) => setBioInput(e.target.value)}
@@ -127,7 +130,7 @@ function EditProfile({ user, onSave, onCancel }) {
                     placeholder="Bio"
                 />
                 <div className="d-flex">
-                    <button className="btn btn-primary tamanhaBtn" onClick={handleSaveChanges}>Salvar</button>
+                    <button className="btn btn-primary tamanhaBtn" onClick={handleSaveChanges} disabled={usernameAvailable === false}>Salvar</button>
                     <button className="btn btn-secondary tamanhaBtn" onClick={onCancel}>Cancelar</button>
                 </div>
             </div>
