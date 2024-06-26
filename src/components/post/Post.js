@@ -17,8 +17,8 @@ function Post({ post }) {
     const [commentContent, setCommentContent] = useState('');
     const [showAllComments, setShowAllComments] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
+    const [showCommentMenu, setShowCommentMenu] = useState(null);
 
-    // Carrega o estado inicial do like do usuário para o post
     useEffect(() => {
         const checkLikeStatus = async () => {
             try {
@@ -94,8 +94,21 @@ function Post({ post }) {
         }
     };
 
+    const handleDeleteComment = async (commentId) => {
+        try {
+            await axios.delete(`http://localhost:8080/comments/${commentId}`);
+            setComments(comments.filter(comment => comment.id !== commentId));
+        } catch (error) {
+            console.error('Erro ao deletar comentário', error);
+        }
+    };
+
     const toggleMenu = () => {
         setShowMenu(!showMenu);
+    };
+
+    const toggleCommentMenu = (commentId) => {
+        setShowCommentMenu(showCommentMenu === commentId ? null : commentId);
     };
 
     const displayedComments = showAllComments ? comments : comments.slice(0, 3);
@@ -133,9 +146,26 @@ function Post({ post }) {
                 <div className="comments-section">
                     {displayedComments.map(comment => (
                         <div key={comment.id} className="comment">
-                            <strong className='usernameComment' onClick={() => handleLinkClick(comment.username)}>{comment.username}:</strong> {comment.content}
+                            <div className="comment-content">
+                                <strong className='usernameComment' onClick={() => handleLinkClick(comment.username)}>{comment.username}:</strong>
+                                {comment.content}
+                            </div>
+                            {(loggedInUsername === comment.username || loggedInUsername === post.userSummary.username) && (
+                                <div className="comment-menu">
+                                    <FontAwesomeIcon icon={faEllipsisH} onClick={() => toggleCommentMenu(comment.id)} />
+                                    {showCommentMenu === comment.id && (
+                                        <div className="comment-menu-options">
+                                            <button onClick={() => handleDeleteComment(comment.id)}>
+                                                <FontAwesomeIcon icon={faTrash} /> Excluir
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
+
                     ))}
+
                     {comments.length > 3 && !showAllComments && (
                         <button className="show-all-comments" onClick={() => setShowAllComments(true)}>
                             Ver todos os comentários

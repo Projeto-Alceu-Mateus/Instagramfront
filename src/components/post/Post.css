@@ -132,3 +132,46 @@
     text-align: center;
     padding: 10px;
 }
+.comment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+    padding-right: 20px; /* Ajuste para garantir espaço para o ícone de menu */
+}
+
+.comment-content {
+    flex-grow: 1; /* Garante que o conteúdo do comentário ocupe o espaço disponível */
+}
+
+.comment-menu {
+    position: absolute;
+    right: 0; /* Ajuste para alinhar corretamente à direita */
+    top: 0; /* Ajuste para alinhar com o topo do comentário */
+}
+
+.comment-menu-options {
+    position: absolute;
+    top: 100%; /* Alinha logo abaixo do ícone de menu */
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    min-width: 100px; /* Define uma largura mínima para o menu */
+}
+
+.comment-menu-options button {
+    background: none;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.comment-menu-options button:hover {
+    background-color: #f5f5f5;
+}
