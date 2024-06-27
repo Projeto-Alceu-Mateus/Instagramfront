@@ -4,7 +4,8 @@ import { jwtDecode } from 'jwt-decode';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as fasHeart, faTrash, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart, faPaperPlane } from '@fortawesome/free-regular-svg-icons';
-import './Post.css'; // Certifique-se de que o caminho para o CSS está correto
+import './Post.css';
+import LikesPopup from './LikesPopup';
 
 function Post({ post }) {
     const token = localStorage.getItem('userToken');
@@ -18,6 +19,7 @@ function Post({ post }) {
     const [showAllComments, setShowAllComments] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [showCommentMenu, setShowCommentMenu] = useState(null);
+    const [showLikesPopup, setShowLikesPopup] = useState(false);
 
     useEffect(() => {
         const checkLikeStatus = async () => {
@@ -140,7 +142,7 @@ function Post({ post }) {
                         <FontAwesomeIcon className={`like-button ${liked ? 'liked' : ''}`} onClick={toggleLike} icon={liked ? fasHeart : farHeart} size="lg" />
                         <hr className="barraLike" />
                     </div>
-                    <strong>{likeCount} curtidas</strong>
+                    <strong className="curtidas" onClick={() => setShowLikesPopup(true)}>{likeCount} curtidas</strong>
                     <p>{post.caption}</p>
                 </div>
                 <div className="comments-section">
@@ -189,6 +191,7 @@ function Post({ post }) {
             <div className="footer">
                 <hr />
             </div>
+            {showLikesPopup && <LikesPopup postId={post.postId} onClose={() => setShowLikesPopup(false)} />}
         </Fragment>
     );
 }
