@@ -3,7 +3,10 @@
     max-width: 400px;
     margin: auto;
     padding: 20px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 button {
@@ -13,7 +16,7 @@ button {
     border: none;
     border-radius: 5px;
     font-size: 16px;
-    width: 100%;
+    width: 15%;
 }
 
 button:hover {
@@ -27,7 +30,8 @@ button:hover {
 .mode-toggle-btn,
 .delete-account-btn,
 .change-password-btn {
-    display: inline-block;
+    display: block;
+    width: 15%;
     padding: 10px 20px;
     margin: 10px 0;
     font-size: 16px;
@@ -57,10 +61,11 @@ button:hover {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 15%;
 }
 
 .change-password-form .form-control {
-    width: 100%;
+    width: 15%;
     padding: 10px;
     margin: 10px 0;
     font-size: 16px;
@@ -69,7 +74,8 @@ button:hover {
 }
 
 .save-password-btn {
-    display: inline-block;
+    display: block;
+    width: 15%;
     padding: 10px 20px;
     margin-top: 10px;
     font-size: 16px;
