@@ -1,0 +1,57 @@
+.top-users-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 250px;
+    max-width: 90%;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    float: right;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-btn:hover {
+    color: #555;
+}
+
+.top-users-popup h2 {
+    margin-top: 0;
+    font-size: 18px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.profile-pic-small {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.top-users-popup ul {
+    list-style: none;
+    padding: 0;
+}
+
+.top-users-popup li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.top-users-popup li span {
+    font-weight: bold;
+    color: #333;
+}
