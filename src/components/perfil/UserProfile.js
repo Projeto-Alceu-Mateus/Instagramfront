@@ -9,6 +9,8 @@ import NewPostPopup from '../service/NewPostPopup';
 import { jwtDecode } from 'jwt-decode';
 import ProfilePosts from '../post/ProfilePost';
 import EditProfile from './EditProfile';
+import FollowersPopup from './FollowersPopup'; // Importando o novo componente
+import FollowingPopup from './FollowingPopup'; // Importando o novo componente
 
 function UserProfile() {
     const [loading, setLoading] = useState(true);
@@ -19,6 +21,8 @@ function UserProfile() {
     const [isOwner, setIsOwner] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [showFollowersPopup, setShowFollowersPopup] = useState(false); // Estado para mostrar o popup de seguidores
+    const [showFollowingPopup, setShowFollowingPopup] = useState(false); // Estado para mostrar o popup de seguidos
 
     const { username: targetUsername } = useParams();
     const token = localStorage.getItem('userToken');
@@ -107,7 +111,10 @@ function UserProfile() {
                                 <h1 className="profile-name">{user.fullName}</h1>
                                 <h1>{user.username}</h1>
                                 <p className="profile-bio">{user.bio || "No bio provided."}</p>
-                                <p>Seguidores: {user.followersCount} Seguindo: {user.followingCount}</p>
+                                <p>
+                                    <span className="clickable" onClick={() => setShowFollowersPopup(true)}>Seguidores: {user.followersCount}</span>
+                                    <span className="clickable" onClick={() => setShowFollowingPopup(true)}> Seguindo: {user.followingCount}</span>
+                                </p>
                                 <button onClick={handleFollowToggle} className="btn btn-primary tamanhaBtn">
                                     {isFollowing ? 'Deixar de Seguir' : 'Seguir'}
                                 </button>
@@ -124,6 +131,8 @@ function UserProfile() {
             </div>
             {showSearchPopup && <SearchPopup closePopup={() => setShowSearchPopup(false)} />}
             {showNewPostPopup && <NewPostPopup closePopup={() => setShowNewPostPopup(false)} />}
+            {showFollowersPopup && <FollowersPopup username={targetUsername} closePopup={() => setShowFollowersPopup(false)} />}
+            {showFollowingPopup && <FollowingPopup username={targetUsername} closePopup={() => setShowFollowingPopup(false)} />}
         </Fragment>
     );
 
@@ -147,7 +156,10 @@ function UserProfile() {
                                         <h1 className="profile-name">{user.fullName}</h1>
                                         <h1>{user.username}</h1>
                                         <p className="profile-bio">{user.bio || "No bio provided."}</p>
-                                        <p>Seguidores: {user.followersCount} Seguindo: {user.followingCount}</p>
+                                        <p>
+                                            <span className="clickable" onClick={() => setShowFollowersPopup(true)}>Seguidores: {user.followersCount}</span>
+                                            <span className="clickable" onClick={() => setShowFollowingPopup(true)}> Seguindo: {user.followingCount}</span>
+                                        </p>
                                         {isOwner && <button className="btn btn-danger tamanhaBtn" onClick={() => setIsEditing(true)}>Editar Perfil</button>}
                                     </div>
                                 </Fragment>
@@ -162,6 +174,8 @@ function UserProfile() {
             </div>
             {showSearchPopup && <SearchPopup closePopup={() => setShowSearchPopup(false)} />}
             {showNewPostPopup && <NewPostPopup closePopup={() => setShowNewPostPopup(false)} />}
+            {showFollowersPopup && <FollowersPopup username={targetUsername} closePopup={() => setShowFollowersPopup(false)} />}
+            {showFollowingPopup && <FollowingPopup username={targetUsername} closePopup={() => setShowFollowingPopup(false)} />}
         </Fragment>
     );
 }
