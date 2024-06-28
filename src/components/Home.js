@@ -6,25 +6,28 @@ import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import './assets/css/home.css';
 import Post from './post/Post';
+import TopUsersPopup from './TopUsersPopup';
 
 function Home() {
     const [showSearchPopup, setShowSearchPopup] = useState(false);
     const [showNewPostPopup, setShowNewPostPopup] = useState(false);
+    const [showTopUsersPopup, setShowTopUsersPopup] = useState(true);
     const token = localStorage.getItem('userToken');
-    const decoded = jwtDecode(token); // Decodifica o token para obter o nome de usuário logado
+    const decoded = jwtDecode(token); 
     const loggedInUsername = decoded.sub;
 
-    const [posts, setPosts] = useState([]); // Alterado de 'user' para 'posts' para maior clareza
+    const [posts, setPosts] = useState([]); 
 
     useEffect(() => {
         axios.get(`http://localhost:8080/user/${loggedInUsername}/feed`)
             .then(response => {
-                setPosts(response.data); // Assume que a resposta é um array de postagens
+                setPosts(response.data); 
             })
             .catch(error => {
                 console.error('Failed to fetch user data:', error);
             });
     }, [loggedInUsername]);
+
     return (
         <div className="container-fluid h-100">
             <div className="row h-100">
@@ -38,6 +41,7 @@ function Home() {
                     </div>
                     {showSearchPopup && <SearchPopup closePopup={() => setShowSearchPopup(false)} />}
                     {showNewPostPopup && <NewPostPopup closePopup={() => setShowNewPostPopup(false)} />}
+                    {showTopUsersPopup && <TopUsersPopup closePopup={() => setShowTopUsersPopup(false)} />}
                 </div>
             </div>
         </div>
