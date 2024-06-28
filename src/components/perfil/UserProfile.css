@@ -86,3 +86,6 @@
 .profile-edit .btn {
     margin: 5px;
 }
+.clickable{
+    cursor: pointer;
+}
